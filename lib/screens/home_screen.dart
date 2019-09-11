@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_launch/flutter_launch.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:ponta_firme/data/rest.dart';
 import 'package:ponta_firme/model/rating.dart';
@@ -171,7 +172,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Colors.green[600],
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold)),
-                            onTap: () {},
+                            onTap: () {
+                              print("clicou");
+                              whatsAppOpen();
+                              print("clicou2");
+                            },
                           ),
                         ],
                       ),
@@ -184,6 +189,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  void whatsAppOpen() async {
+    bool whatsapp = await FlutterLaunch.hasApp(name: "whatsapp");
+
+    if (whatsapp) {
+      await FlutterLaunch.launchWathsApp(phone: "5534992016100", message: "Hello, flutter_launch");
+    } else {
+      _dialog(titulo: "Ooops!", texto: "Não conseguimos abrir seu Whatsapp, entre em contato conosco pelo número: (45) 99102-5167");
+    }
   }
 
   void _dialog({String titulo, String texto}) {
